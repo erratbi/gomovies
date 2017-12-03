@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css?family=Cairo:200,400,700&subset=arabic,latin-ext');
+@import 'variables';
+
+@import 'bootstrap/scss/bootstrap.scss';
+
+body,
+html {
+	direction: rtl;
+	text-align: right;
+	font-family: cairo, sans-serif;
+	font-size: 12px;
+}
+
+body {
+	color: #eee;
+	background-color: #1a1a1a;
+}
