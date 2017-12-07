@@ -8,7 +8,9 @@ const MovieListItem = ({ slug, poster, title, release }) => (
 	<li className="col-6 col-sm-4 col-md-3 col-lg-2 movie-item-wrap">
 		<div className="movie-item">
 			<Link to={`/show/${slug}`}>
-				<img src={poster} alt={title} />
+				<LazyLoad height={200}>
+					<img src={poster} alt={title} />
+				</LazyLoad>
 				<h1>
 					{title}
 					<small>{moment(release).format('Y')}</small>

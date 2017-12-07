@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import { connect } from 'react-redux';
-
-import { loadMovie, loadPlaylist } from '../../reducers/actions';
+import { getMovie, getPlaylist } from '../../reducers/movie';
 
 axios.defaults.baseURL = 'http://localhost:3001';
 
@@ -17,7 +16,6 @@ class WatchPage extends Component {
 				slug: PropTypes.string.isRequired,
 			}).isRequired,
 		}).isRequired,
-		loadMovie: PropTypes.func.isRequired,
 		movie: PropTypes.shape({
 			title: PropTypes.string.isRequired,
 			links: PropTypes.object.isRequired,
@@ -25,11 +23,13 @@ class WatchPage extends Component {
 		playlist: PropTypes.shape({
 			sources: PropTypes.array.isRequired,
 		}).isRequired,
-		loadPlaylist: PropTypes.func.isRequired,
+		getMovie: PropTypes.func.isRequired,
+		getPlaylist: PropTypes.func.isRequired,
 	};
 
 	componentWillMount = async () => {
 		const { match: { params: { slug } } } = this.props;
+		const file = 'http://localhost:3001/server.m3u';
 
 		this.jwConfig = {
 			width: '1080',
@@ -38,12 +38,21 @@ class WatchPage extends Component {
 			autostart: false,
 			controls: true,
 			primary: 'html5',
-			sources: [{ file: 'video/0.mp4' }],
+			playlist: [
+				{
+					sources: [
+						{
+							file: 'http://localhost:3001/playlist',
+							type: 'm3u8',
+						},
+					],
+				},
+			],
 			abouttext: 'my-Arab.com',
 			aboutlink: 'https://my-arab.com',
 		};
 
-		this.props.loadMovie(slug).catch(() => {
+		this.props.getMovie(slug).catch(() => {
 			this.props.history.push('/');
 			return null;
 		});
@@ -54,29 +63,16 @@ class WatchPage extends Component {
 		this.player.setup(this.jwConfig);
 	};
 
-	componentWillReceiveProps = nextProps => {
-		const { movie: { links, title, links: { local, remote } }, playlist: { sources } } = nextProps;
-		if (links && title !== this.props.movie.title) {
-			this.props.loadPlaylist(local, 'l').catch(() => {
-				this.props.loadPlaylist(remote, 'r').catch(() => {
-					this.props.history.push('/');
-				});
-			});
-		}
-		if (sources !== this.props.playlist.sources) {
-			this.player.load({ sources });
-			this.player.play();
-		}
-	};
+	componentWillReceiveProps = nextProps => {};
 
 	loadLocal = () => {
 		this.player.stop();
-		this.props.loadPlaylist(this.props.movie.links.local, 'l');
+		this.props.getPlaylist(this.props.movie.links.local, 'l');
 	};
 
 	loadRemote = () => {
 		this.player.stop();
-		this.props.loadPlaylist(this.props.movie.links.remote, 'r');
+		this.props.getPlaylist(this.props.movie.links.remote, 'r');
 	};
 
 	render() {
@@ -112,6 +108,4 @@ class WatchPage extends Component {
 	}
 }
 
-export default connect(state => ({ movie: state.movie.selectedMovie, playlist: state.movie.playlist }), { loadMovie, loadPlaylist })(
-	WatchPage,
-);
+export default connect(state => ({ movie: state.movie.movie, playlist: state.movie.playlist }), { getMovie, getPlaylist })(WatchPage);

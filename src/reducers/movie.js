@@ -5,6 +5,7 @@ import api from '../api';
 
 export const getMovies = createAction('MOVIES_GET', api.movie.getMovies);
 export const getMovie = createAction('MOVIE_GET', slug => api.movie.getMovie(slug));
+export const getPlaylist = createAction('PLAYLIST_GET', (link, type) => api.movie.getPlaylist(link, type));
 export const getRecommended = createAction('RECOMMENDED_GET', slug => api.movie.getRecommended(slug));
 
 // State
@@ -82,6 +83,23 @@ export default handleActions(
 			fetched: true,
 			fetching: false,
 			recommended: action.payload,
+		}),
+		PLAYLIST_GET_PENDING: state => ({
+			...state,
+			fetching: true,
+			fetched: false,
+		}),
+		PLAYLIST_GET_REJECTED: (state, action) => ({
+			...state,
+			fetched: false,
+			fetching: false,
+			error: action.payload,
+		}),
+		PLAYLIST_GET_FULFILLED: (state, action) => ({
+			...state,
+			fetched: true,
+			fetching: false,
+			playlist: action.payload,
 		}),
 	},
 	initialState,

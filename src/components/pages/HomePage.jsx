@@ -14,7 +14,7 @@ class HomePage extends Component {
 				slug: PropTypes.string.isRequired,
 			}).isRequired,
 		).isRequired,
-		fetching: PropTypes.bool.isRequired,
+		loaded: PropTypes.bool.isRequired,
 		fetched: PropTypes.bool.isRequired,
 	};
 	componentWillMount = () => {
@@ -22,7 +22,7 @@ class HomePage extends Component {
 	};
 
 	render() {
-		const { movies, fetching, fetched } = this.props;
+		const { movies, fetched } = this.props;
 		return (
 			<div className="container">
 				<div className={cx({ invisible: !this.props.loaded })}>
@@ -47,7 +47,6 @@ export default connect(
 	state => ({
 		loaded: !state.loadingBar.default,
 		movies: state.movie.movies,
-		fetching: state.movie.fetching,
 		fetched: state.movie.fetched,
 	}),
 	{
