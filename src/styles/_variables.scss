@@ -1,5 +1,9 @@
 // New color
-$new-color: red;
+$primary-color: #0397d6;
+$dark-color: #1a1a1a;
+$enable-rounded: false;
+$enable-shadows: false;
+$grid-gutter-width: 0px;
 
 // Array of colors from _variables.scss
-$theme-colors: (primary: $new-color) !default;
+$theme-colors: (primary: $primary-color) !default;

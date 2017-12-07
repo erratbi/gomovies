@@ -1,0 +1,35 @@
+nav.navbar.bg-dark {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  background-color: #232323 !important; }
+
+nav.navbar .navbar-brand {
+  background-image: url(/img/logo-dark.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+  display: inline-block;
+  text-indent: -9999px;
+  width: 160px;
+  height: 60px;
+  margin: 0 0 0 3rem; }
+
+nav.navbar .nav-item {
+  margin-left: 20px; }
+  nav.navbar .nav-item .nav-link {
+    font-size: 16px; }
+
+nav.navbar .search-form input {
+  background-color: #444;
+  border: none;
+  color: #fff;
+  transition: background-color 0.1s ease-in;
+  height: 30px; }
+  nav.navbar .search-form input:focus {
+    background-color: #4e4e4e; }
+
+nav.navbar .loading-bar {
+  height: 2px;
+  background-color: #0397d6;
+  position: absolute;
+  top: 72px;
+  box-shadow: 0 0 3px #0397d6; }

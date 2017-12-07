@@ -25,6 +25,7 @@ class WatchPage extends Component {
 		playlist: PropTypes.shape({
 			sources: PropTypes.array.isRequired,
 		}).isRequired,
+		loadPlaylist: PropTypes.func.isRequired,
 	};
 
 	componentWillMount = async () => {
@@ -54,7 +55,7 @@ class WatchPage extends Component {
 	};
 
 	componentWillReceiveProps = nextProps => {
-		const { movie: { links, cover, title, links: { local, remote } }, playlist: { sources } } = nextProps;
+		const { movie: { links, title, links: { local, remote } }, playlist: { sources } } = nextProps;
 		if (links && title !== this.props.movie.title) {
 			this.props.loadPlaylist(local, 'l').catch(() => {
 				this.props.loadPlaylist(remote, 'r').catch(() => {

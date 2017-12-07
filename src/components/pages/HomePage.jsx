@@ -1,44 +1,56 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import moment from 'moment';
-import { loadMovies } from '../../reducers/actions';
+import cx from 'classnames';
+import MovieList from '../movie/MovieList';
+import { getMovies } from '../../reducers/movie';
 
 class HomePage extends Component {
 	static propTypes = {
-		loadMovies: PropTypes.func.isRequired,
-		movieList: PropTypes.arrayOf(
+		getMovies: PropTypes.func.isRequired,
+		movies: PropTypes.arrayOf(
 			PropTypes.shape({
 				title: PropTypes.string.isRequired,
 				slug: PropTypes.string.isRequired,
 			}).isRequired,
 		).isRequired,
+		fetching: PropTypes.bool.isRequired,
+		fetched: PropTypes.bool.isRequired,
 	};
 	componentWillMount = () => {
-		this.props.loadMovies();
+		this.props.getMovies();
 	};
 
 	render() {
-		const { movieList } = this.props;
-		const list =
-			movieList &&
-			movieList.map(movie => (
-				<li className="col-2" key={movie.slug}>
-					<Link to={`/watch/${movie.slug}`}>
-						<img src={movie.poster} alt={movie.title} />
-						<h1>{movie.title}</h1>
-						<small>{moment(movie.release).format('Y')}</small>
-					</Link>
-				</li>
-			));
+		const { movies, fetching, fetched } = this.props;
 		return (
-			<div>
-				<h1>HomePage</h1>
-				{list && <ul className="row">{list}</ul>}
+			<div className="container">
+				<div className={cx({ invisible: !this.props.loaded })}>
+					{fetched && (
+						<div className="row">
+							<h1>احدث الافلام</h1>
+							<MovieList movies={movies} />
+						</div>
+					)}
+				</div>
+				{!this.props.loaded && (
+					<div className="loading-wrap">
+						<div className="loading" />
+					</div>
+				)}
 			</div>
 		);
 	}
 }
 
-export default connect(state => ({ movieList: state.movie.movieList }), { loadMovies })(HomePage);
+export default connect(
+	state => ({
+		loaded: !state.loadingBar.default,
+		movies: state.movie.movies,
+		fetching: state.movie.fetching,
+		fetched: state.movie.fetched,
+	}),
+	{
+		getMovies,
+	},
+)(HomePage);

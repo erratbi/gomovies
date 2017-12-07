@@ -1,0 +1,81 @@
+#movie-detail .breadcrumb {
+  background-color: transparent;
+  padding: 0; }
+
+#movie-detail .watch-link {
+  border: 3px solid #fff;
+  color: white;
+  padding: 30px 31px 30px 35px;
+  border-radius: 50%;
+  background-color: rgba(3, 151, 214, 0.3);
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.4) inset, 0 0 12px rgba(0, 0, 0, 0.4);
+  transition: transform 0.5s cubic-bezier(1, -1, 0, 2); }
+  #movie-detail .watch-link:hover {
+    transform: scale(1.25); }
+
+#movie-detail .cover {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 400px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center; }
+
+#movie-detail .movie-data {
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.05); }
+  #movie-detail .movie-data .poster {
+    width: 90%; }
+
+#movie-detail .movie-keywords {
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.1); }
+
+#movie-detail ul.listing li {
+  margin-bottom: 3px; }
+  #movie-detail ul.listing li::after {
+    content: '-';
+    margin: 0 5px; }
+  #movie-detail ul.listing li:last-child::after {
+    display: none; }
+  #movie-detail ul.listing li.label {
+    font-weight: bold;
+    font-size: 13px; }
+    #movie-detail ul.listing li.label::after {
+      content: ':';
+      margin: 0 3px;
+      font-weight: normal; }
+
+#movie-detail .movie-keywords ul.listing a {
+  color: #999;
+  font-size: 14px; }
+  #movie-detail .movie-keywords ul.listing a::after {
+    content: '#'; }
+
+#recommended {
+  margin-top: 40px; }
+  #recommended h2 {
+    margin-bottom: 15px;
+    font-size: 18px;
+    padding: 0 20px;
+    background-color: #0397d6;
+    height: 40px;
+    line-height: 40px;
+    color: #fff;
+    display: inline-block; }
+
+.loading {
+  width: 80px;
+  height: 80px;
+  margin: 40vh auto 0;
+  background-color: #525252;
+  border-radius: 100%;
+  animation: sk-scaleout 1s infinite ease-in-out; }
+
+@keyframes sk-scaleout {
+  0% {
+    transform: scale(0); }
+  100% {
+    transform: scale(1);
+    opacity: 0; } }
